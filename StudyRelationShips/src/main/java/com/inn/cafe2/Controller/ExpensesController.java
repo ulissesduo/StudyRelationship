@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/expenses")
 public class ExpensesController {
@@ -17,11 +19,21 @@ public class ExpensesController {
     @Autowired
     private IExpensesService expensesService;
 
+    @GetMapping
+    public List<Expenses> getAllExpenses(){
+        return expensesService.getAllExpenses();
+    }
+
+    @GetMapping("/{id}")
+    public Expenses getSpecificExpense(@PathVariable Long id) throws Exception{
+            return expensesService.getExpenseById(id);
+    }
+
     @PostMapping("/add")
     public ResponseEntity<Void> createExpense(@RequestBody ExpensesRequest request) {
         try {
             Long userId = request.getUserId();
-            User user = userService.getById(userId);
+            User user = userService.getUserById(userId);
             Expenses expense = new Expenses();
             expense.setDescription(request.getDescription());
             expense.setValue(request.getValue());
@@ -40,8 +52,8 @@ public class ExpensesController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteExpenses(@RequestParam Long id) throws Exception {
-        expensesService.deleteExpense(id);
+    public ResponseEntity<Void> deleteExpenseById(@PathVariable Long id) throws Exception {
+        expensesService.deleteExpenseById(id);
+        return ResponseEntity.ok().build();
     }
-
 }

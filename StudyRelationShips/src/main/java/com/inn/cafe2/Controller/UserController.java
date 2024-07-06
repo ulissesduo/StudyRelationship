@@ -4,13 +4,11 @@ import com.inn.cafe2.DTO.Request.UserWithExpensesRequest;
 import com.inn.cafe2.Entity.Expenses;
 import com.inn.cafe2.Entity.User;
 import com.inn.cafe2.Service.IExpensesService;
+import com.inn.cafe2.Service.IRecurringExpensesService;
 import com.inn.cafe2.Service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,6 +21,25 @@ public class UserController {
 
     @Autowired
     private IExpensesService expensesService;
+
+    @Autowired
+    private IRecurringExpensesService recurringExpensesService;
+
+    @GetMapping
+    public List<User> getAllUsers(){
+        return userService.getAllUsers();
+    }
+
+    @GetMapping("/{id}")
+    public User getUserById(@PathVariable Long id){
+        return userService.getUserById(id);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) throws Exception {
+        userService.deleteById(id);
+        return ResponseEntity.ok().build();
+    }
 
     @PostMapping("/add")
     public ResponseEntity<User> createUserWithExpenses(@RequestBody UserWithExpensesRequest request) {

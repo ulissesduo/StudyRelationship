@@ -23,9 +23,21 @@ public class UserService implements IUserService{
 
     @Override
     @Transactional
-    public User getById(Long id) {
+    public User getUserById(Long id) {
         return userRepository.findById(id).orElse(null);
     }
 
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
 
+    @Override
+    public void deleteById(Long id) throws Exception {
+        User user = userRepository.findById(id).orElse(null);
+        if(user == null){
+            throw new Exception("Couldn't find the user");
+        }
+        userRepository.deleteById(id);
+    }
 }

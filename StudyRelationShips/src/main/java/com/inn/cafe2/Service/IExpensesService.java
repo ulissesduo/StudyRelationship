@@ -6,9 +6,7 @@ import java.util.List;
 
 public interface IExpensesService {
     Expenses createExpenses(Expenses exp);
-
-    void deleteExpense(Long id) throws Exception;
-
     Expenses getExpenseById(Long id);
-
+    List<Expenses> getAllExpenses();
+    void deleteExpenseById(Long id) throws Exception;
 }

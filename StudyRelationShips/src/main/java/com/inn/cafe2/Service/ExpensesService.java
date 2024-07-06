@@ -21,18 +21,12 @@ public class ExpensesService implements IExpensesService{
 
 
     @Override
-    public void deleteExpense(Long id) throws Exception {
-        try{
-            Expenses myExp = getExpenseById(id);
-
-            if(myExp != null){
-                repository.deleteById(id);
-            }
+    public void deleteExpenseById(Long id) throws Exception {
+        Expenses expense = repository.findById(id).orElse(null);
+        if (expense == null) {
+            throw new Exception("Expense not found with ID: " + id);
         }
-        catch(Exception e){
-            throw new Exception(e.getMessage());
-        }
-
+        repository.delete(expense);
     }
 
     @Override
@@ -40,5 +34,8 @@ public class ExpensesService implements IExpensesService{
         return repository.findById(id).orElse(null);
     }
 
-
+    @Override
+    public List<Expenses> getAllExpenses() {
+        return repository.findAll();
+    }
 }
