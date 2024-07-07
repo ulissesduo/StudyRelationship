@@ -51,6 +51,13 @@ public class ExpensesController {
         }
     }
 
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Expenses> updateExpenses(@PathVariable Long id, @RequestBody ExpensesRequest expReq) throws Exception {
+        Long userId = expReq.getUserId();
+        expensesService.updateExpense(userId,id,expReq);
+        return ResponseEntity.ok().build();
+    }
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteExpenseById(@PathVariable Long id) throws Exception {
         expensesService.deleteExpenseById(id);

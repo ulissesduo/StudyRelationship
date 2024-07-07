@@ -1,5 +1,6 @@
 package com.inn.cafe2.Service;
 
+import com.inn.cafe2.DTO.Request.UserRequest;
 import com.inn.cafe2.Entity.Expenses;
 import com.inn.cafe2.Entity.User;
 import com.inn.cafe2.Repository.IUserRepository;
@@ -22,8 +23,20 @@ public class UserService implements IUserService{
     }
 
     @Override
-    public User updateUser(Long id) {
-        return null;
+    public User updateUser(Long id, UserRequest userReq) throws Exception{
+        User user = this.getUserById(id);
+        if(user == null){
+            throw new Exception("Couldn't find the user with the id " + id);
+        }
+        user.setName(userReq.getName());
+        user.setLastName(userReq.getLastName());
+        user.setEmail(userReq.getEmail());
+        user.setLogin(userReq.getLogin());
+        user.setPassword(userReq.getPassword());
+        user.setAge(userReq.getAge());
+        user.setGender(userReq.getGender());
+
+        return userRepository.save(user);
     }
 
     @Override

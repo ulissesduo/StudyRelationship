@@ -1,5 +1,6 @@
 package com.inn.cafe2.Controller;
 
+import com.inn.cafe2.DTO.Request.UserRequest;
 import com.inn.cafe2.DTO.Request.UserWithExpensesRequest;
 import com.inn.cafe2.Entity.Expenses;
 import com.inn.cafe2.Entity.User;
@@ -49,6 +50,16 @@ public class UserController {
             expense.setUser(user);
             expensesService.createExpenses(expense);
         }
+        return ResponseEntity.ok(user);
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody UserRequest request) throws Exception {
+        User user = userService.getUserById(id);
+        if (user == null){
+            return ResponseEntity.badRequest().build();
+        }
+        userService.updateUser(id,request);
         return ResponseEntity.ok(user);
     }
 }
