@@ -22,6 +22,11 @@ public class UserService implements IUserService{
     }
 
     @Override
+    public User updateUser(Long id) {
+        return null;
+    }
+
+    @Override
     @Transactional
     public User getUserById(Long id) {
         return userRepository.findById(id).orElse(null);

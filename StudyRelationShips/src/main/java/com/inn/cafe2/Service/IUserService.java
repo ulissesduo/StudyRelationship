@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface IUserService {
     User createUser(User user);
+    User updateUser(Long id);
     User getUserById(Long id);
     List<User> getAllUsers();
     void deleteById(Long id) throws Exception;
