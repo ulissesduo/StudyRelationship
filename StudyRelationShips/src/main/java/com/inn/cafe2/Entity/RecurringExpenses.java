@@ -1,5 +1,6 @@
 package com.inn.cafe2.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.DynamicInsert;
@@ -36,6 +37,7 @@ public class RecurringExpenses {
     @Column(name="FinalDate")
     private Date FinalDate;
 
+    //    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="user_id")
     private User user;

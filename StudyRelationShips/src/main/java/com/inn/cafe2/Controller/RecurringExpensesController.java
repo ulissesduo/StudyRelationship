@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/recExp")
 public class RecurringExpensesController {
@@ -18,9 +20,14 @@ public class RecurringExpensesController {
     @Autowired
     private IRecurringExpensesService recurringExpensesService;
 
+    @GetMapping("/{id}")
+    public RecurringExpenses recExpId(@PathVariable Long id){
+        return recurringExpensesService.getRecExpById(id);
+    }
+
     @GetMapping
-    public RecurringExpenses getAllRecExp(){
-        return null;
+    public List<RecurringExpenses> getAllRE(){
+        return recurringExpensesService.getAllRecExp();
     }
 
     @PostMapping("/add")
@@ -44,6 +51,11 @@ public class RecurringExpensesController {
         catch (Exception e){
             return ResponseEntity.badRequest().build();
         }
+    }
 
+    @PutMapping("/update/{id}")
+    public ResponseEntity<RecurringExpenses> updateRecExp(@PathVariable  Long id, @RequestBody RecurringExpenses recExp) throws Exception {
+        recurringExpensesService.updateRecExp(id, recExp);
+        return ResponseEntity.ok().build();
     }
 }
