@@ -5,29 +5,26 @@ import lombok.Data;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
-@Entity
 @Data
+@Entity
 @DynamicUpdate
 @DynamicInsert
-@Table(name = "FutGoals")
-public class FutureGoals {
+@Table(name="fg")
+public class Fgoal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long Id;
+    private Long id;
 
-    @Column(name = "description")
-    public String Description;
+    @Column(name= "description")
+    private String Description;
 
-    @Column(name = "amountQuantity")
-    public Integer AmountQuantity;
+    @Column(name="amountQuantity")
+    private Double amountQuantity;
 
     @Column(name = "currentAmount")
-    public Integer CurrentAmount;
+    private Double currentAmount;
 
-    //public Integer Type;
-
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "user_id")
-    public User user_id;
-
+    private User user;
 }

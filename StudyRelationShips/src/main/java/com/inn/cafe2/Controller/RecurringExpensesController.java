@@ -44,6 +44,7 @@ public class RecurringExpensesController {
             reqexp.setInitialDate(request.getInitialDate());
             reqexp.setUser(user);
 
+
             recurringExpensesService.CreateNewRecurringExpense(reqexp);
 
             return ResponseEntity.ok().build();
